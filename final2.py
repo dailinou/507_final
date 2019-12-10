@@ -96,7 +96,18 @@ def interactive_prompt():
     fig.show()
 
 
-    user_select_game_num = input('Select one game to see detail information of its developers (please use the ranking number)')
+    user_select_game_num = input('Select one game to see detail information of its developers (please use the ranking number):')
+    terminator = True
+    while terminator:
+        try:
+            val = int(user_select_game_num)
+            if val>0 and val<26:
+                terminator = False
+            else:
+                user_select_game_num = input('Please use the ranking number to select the game (1-25):')
+        except:
+            print('This is not an integer!')
+            user_select_game_num = input('Please use the ranking number to select the game (1-25):')
 
     user_select_game_name = top_25_dic[user_select_game_num]
 
@@ -131,7 +142,22 @@ def interactive_prompt():
 
 
 
-    user_select_dev_num = input('Select one developer to see all games developed by this developer (please use the ranking number)')
+    user_select_dev_num = input('Select one developer to see all games developed by this developer (please use the ranking number):')
+    max_num = int(len(dev_name_list))
+    terminator2 = True
+    while terminator2:
+        try:
+            val2 = int(user_select_dev_num)
+
+            if val2>0 and val2<(max_num+1):
+                terminator2 = False
+
+            else:
+                user_select_dev_num = input('Please use a number within the ranking to select a developer:')
+        except:
+            print('This is not an integer!')
+            user_select_dev_num = input('Please use the ranking number to select a developer:')
+
 
     selected_dev_id = cur.execute('''SELECT Id FROM Developers
     WHERE Developer_name=\'''' + dev_name_list[int(user_select_dev_num)-1] + '''\'''').fetchall()[0][0]
